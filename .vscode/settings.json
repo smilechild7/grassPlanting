@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "ios": "cpp",
+        "tuple": "cpp",
+        "iostream": "cpp",
+        "stack": "cpp",
+        "string": "cpp",
+        "initializer_list": "cpp",
+        "vector": "cpp",
+        "xiosbase": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
