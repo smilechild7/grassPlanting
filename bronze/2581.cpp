@@ -1,4 +1,5 @@
 #include<stdio.h>
+// 깃 허브 제발 되어라
 int j=0;
 int checkPrimeNum(int num, int* ptr){
     if(num==2){
