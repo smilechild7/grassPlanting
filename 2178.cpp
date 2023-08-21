@@ -45,7 +45,6 @@ int main() {
                 
                 if (nx >= 0 && ny >=0 && int(map[nx][ny])=='1' && !visited[nx][ny] ) {
                         q.push(make_pair(nx,ny));
-                        map[nx][ny]=char(int(map[x][y])+1);
                         visited[nx][ny] = true;
                 }
             }
