@@ -5,15 +5,17 @@
 using namespace std;
 
 
+bool visited[10000];
+
 
 int main() {
-    ios_base::sync_with_stdio(false);
+//    ios_base::sync_with_stdio(false);  // 이거 쓰면 scanf 쓰면 안된다
     cin.tie(NULL); cout.tie(NULL);
 
     int N, M; cin >> N >> M;
     queue<int> q;
     int map[10000];
-    bool visited[10000];
+
     vector <int> graph[10000];
 
     for(int i=0; i<N*M; i++){
@@ -38,13 +40,12 @@ int main() {
         }
     }
 
-    int t=0;
+    
     q.push(0);
     while (!q.empty()) {
         int k = q.front();
         q.pop();
         int s = graph[k].size();
-
         for (int i=0; i<s; i++) {
             int y = graph[k][i];
             if (!visited[y]) {
@@ -55,6 +56,5 @@ int main() {
         }
     }
     cout << map[N*M-1];
-
     return 0;
 }
