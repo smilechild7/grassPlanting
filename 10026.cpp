@@ -95,5 +95,5 @@ int main() {
             cnt2+=1;
         }
     }
-    cout << cnt1-1 <<" "<<cnt2-1;
+    cout << cnt1 <<" "<<cnt2;
 }
