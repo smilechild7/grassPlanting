@@ -17,17 +17,14 @@ int main() {
     }
 
     sort(v.begin(),v.end());
-    int a,b,k;
+    long a,b,k;
     if (N%2==1) {
-        for (int i=1; i<N/2; i++) {
-            v.pop_back();
-        }
-        k = v.back();
+        k = v[N/2];
         cout << k*k;
     } else {
         a = v.front();
         b = v.back();
         cout << a*b;
     }
-
+    return 0;
 }
