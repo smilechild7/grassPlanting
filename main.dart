@@ -12,18 +12,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: const Text('Home'),
+            title: const Text('EOS BASIC'),
+            centerTitle: true,
             leading: Icon(Icons.dehaze),
             actions: [Icon(Icons.settings_outlined)],
           ),
           body: SafeArea(
-              child: Center(
-                  child: Column(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/eos_logo.png', width: 300, height: 300)
             ],
-          )))),
+          ))),
     );
   }
 }
