@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
           floatingActionButton: FloatingActionButton(
             onPressed: () {},
             backgroundColor: Colors.green,
+            child: Icon(Icons.add),
           ),
           body: SafeArea(
               // 휴대폰 조건에 따라 화면이 잘리지 않도록 방지
