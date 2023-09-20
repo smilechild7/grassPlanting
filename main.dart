@@ -22,6 +22,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    // Widget 의 LifeCycle 동안 오직 1번 수행됨
+    // 수행이 완료되지 않았더라도 build 함수 호출 가능
+    // initState 에서도 BuildContext를 사용할 수 있다.
     super.initState();
     for (var i = 0; i < 2; i++) {
       _startTimer(i);
@@ -48,6 +51,18 @@ class _MyAppState extends State<MyApp> {
   void _pauseTimer(int k) {
     setState(() {
       isRunning[k] = false;
+    });
+  }
+
+  void _resetTimer() {
+    setState(() {
+      for (int i = 0; i < 3; i++) {
+        timeList[i] = 0;
+        isRunning[i] = false;
+        secList[i] = 0;
+        minList[i] = 0;
+        hourList[i] = 0;
+      }
     });
   }
 
@@ -82,7 +97,14 @@ class _MyAppState extends State<MyApp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/eos_logo.png', width: 200, height: 200),
+                //Image.asset('assets/eos_logo.png', width: 200, height: 200),
+                InkWell(
+                  onTap: () {
+                    _resetTimer();
+                  },
+                  child: Image.asset("assets/eos_logo.png",
+                      width: 200, height: 200),
+                ),
                 Container(
                   height: 50,
                 ),
