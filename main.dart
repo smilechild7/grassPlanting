@@ -1,95 +1,90 @@
-import 'dart:async';
+import 'package:eos_practice/timer_item.dart'; // Import your TimerItem class
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
-  runApp(MyApp());
+  runApp(ClassApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ClassApp extends StatefulWidget {
+  const ClassApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<ClassApp> createState() => _ClassAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  var subjectList = ['국어', '수학'];
-  var timeList = [0, 0, 0];
-  var secList = [0, 0, 0];
-  var minList = [0, 0, 0];
-  var hourList = [0, 0, 0];
-  var isRunning = [false, false];
+class _ClassAppState extends State<ClassApp> {
+  var _time = 0;
+  var _totalTime = 0;
+  var _isRunning = false;
+  var _timer;
+  List<TimerItem> timerItems = [];
 
   @override
   void initState() {
-    // Widget 의 LifeCycle 동안 오직 1번 수행됨
-    // 수행이 완료 되지 않았더라도 build 함수 호출 가능
-    // initState 에서도 BuildContext를 사용할 수 있다.
     super.initState();
-    for (var i = 0; i < 2; i++) {
-      _startTimer(i);
-    }
+    _timer = Timer.periodic(Duration(seconds: 1), _updateTimer);
   }
 
-  void _startTimer(int k) {
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (isRunning[k]) {
-          timeList[k]++;
-          secList[k] = timeList[k] % 60;
-          minList[k] = (timeList[k] ~/ 60) % 60;
-          hourList[k] = timeList[k] ~/ 3600;
-        }
-        timeList[2] = timeList[0] + timeList[1];
-        secList[2] = timeList[2] % 60;
-        minList[2] = (timeList[2] ~/ 60) % 60;
-        hourList[2] = timeList[2] ~/ 3600;
-      });
+  void _updateTimer(Timer timer) {
+    setState(() {
+      if (_isRunning) {
+        timerItems.forEach((element) {
+          if (element.isRunning) element.time++;
+        });
+        _totalTime++;
+      }
     });
   }
 
-  void _pauseTimer(int k) {
+  void _startTimer(index) {
     setState(() {
-      isRunning[k] = false;
+      _isRunning = true;
+      timerItems[index].isRunning = true;
+    });
+  }
+
+  void _pauseTimer(index) {
+    setState(() {
+      timerItems[index].isRunning = false;
+      if (!timerItems.any((element) => element.isRunning)) _isRunning = false;
     });
   }
 
   void _resetTimer() {
     setState(() {
-      for (int i = 0; i < 3; i++) {
-        timeList[i] = 0;
-        isRunning[i] = false;
-        secList[i] = 0;
-        minList[i] = 0;
-        hourList[i] = 0;
-      }
+      _isRunning = false;
+      _totalTime = 0;
+      timerItems.forEach((element) {
+        element.time = 0;
+        element.isRunning = false;
+      });
     });
+  }
+
+  void addItem() {
+    timerItems.add(TimerItem()); // Make sure TimerItem class is defined
   }
 
   @override
   Widget build(BuildContext context) {
-    var secZero = ["", "", ""];
-    var minZero = ["", "", ""];
-    var hourZero = ["", "", ""];
-    for (int j = 0; j < 3; j++) {
-      if (secList[j] < 10) secZero[j] = "0";
-      if (minList[j] < 10) minZero[j] = "0";
-      if (hourList[j] < 10) hourZero[j] = "0";
-    }
+    var totalSec = (_totalTime % 60).toString().padLeft(2, '0');
+    var totalMin = ((_totalTime ~/ 60) % 60).toString().padLeft(2, '0');
+    var totalHour = (_totalTime ~/ 3600).toString().padLeft(2, '0');
 
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
           title: const Text('EOS BASIC'),
           centerTitle: true,
+          backgroundColor: Colors.green,
           leading: Icon(Icons.dehaze),
           actions: [Icon(Icons.settings_outlined)],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: Colors.green,
+          onPressed: addItem,
           child: Icon(Icons.add),
+          backgroundColor: Colors.green,
         ),
         body: SafeArea(
           child: Padding(
@@ -97,115 +92,85 @@ class _MyAppState extends State<MyApp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //Image.asset('assets/eos_logo.png', width: 200, height: 200),
                 InkWell(
-                  // 사진을 버튼으로 쓸 수 있는 위젯
-                  onTap: () {
-                    _resetTimer();
-                  },
-                  child: Image.asset("assets/eos_logo.png",
-                      width: 200, height: 200),
-                ),
-                Container(
-                  height: 50,
+                  onTap: _resetTimer,
+                  child: Image.asset(
+                    'assets/eos_logo.png',
+                    width: 150,
+                    height: 150,
+                  ),
                 ),
                 Text(
-                  "${hourZero[2]}${hourList[2]} : ${minZero[2]}${minList[2]} : ${secZero[2]}${secList[2]}",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  "$totalHour:$totalMin:$totalSec",
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                 ),
                 Container(
-                  height: 50,
+                  height: 100,
                 ),
                 Divider(
                   height: 3,
                   color: Colors.black,
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        padding: EdgeInsets.all(0),
-                        onPressed: () {
-                          if (isRunning[0]) {
-                            _pauseTimer(0);
-                          } else {
-                            isRunning[0] = true;
-                          }
-                        },
-                        icon: isRunning[0]
-                            ? Icon(
-                                Icons.pause_circle,
-                                size: 40,
-                                color: Colors.green,
-                              )
-                            : Icon(
-                                Icons.play_circle,
-                                size: 40,
-                                color: Colors.green,
-                              ),
-                      ),
-                      Text(
-                        "국어",
-                        style: TextStyle(fontSize: 25),
-                      ),
-                      Text(
-                        "${hourZero[0]}${hourList[0]} : ${minZero[0]}${minList[0]} : ${secZero[0]}${secList[0]}",
-                        style: TextStyle(fontSize: 25),
-                      ),
-                    ],
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: timerItems.length,
+                    itemBuilder: (context, index) {
+                      var sec = (timerItems[index].time % 60)
+                          .toString()
+                          .padLeft(2, '0');
+                      var min = ((timerItems[index].time ~/ 60) % 60)
+                          .toString()
+                          .padLeft(2, '0');
+                      var hour = (timerItems[index].time ~/ 3600)
+                          .toString()
+                          .padLeft(2, '0');
+
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  padding: EdgeInsets.all(0),
+                                  onPressed: () {
+                                    timerItems[index].isRunning
+                                        ? _pauseTimer(index)
+                                        : _startTimer(index);
+                                  },
+                                  icon: timerItems[index].isRunning
+                                      ? Icon(
+                                          Icons.pause_circle,
+                                          size: 40,
+                                          color: Colors.green,
+                                        )
+                                      : Icon(
+                                          Icons.play_circle,
+                                          size: 40,
+                                          color: Colors.green,
+                                        ),
+                                ),
+                                Text(
+                                  timerItems[index].name,
+                                  style: TextStyle(fontSize: 25),
+                                ),
+                                Text(
+                                  "$hour:$min:$sec",
+                                  style: TextStyle(fontSize: 25),
+                                )
+                              ],
+                            ),
+                          ),
+                          Divider(
+                            height: 3,
+                            color: Colors.black,
+                          ),
+                        ],
+                      );
+                    },
                   ),
-                ),
-                Divider(
-                  height: 3,
-                  color: Colors.black,
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        padding: EdgeInsets.all(0),
-                        onPressed: () {
-                          if (isRunning[1]) {
-                            _pauseTimer(1);
-                          } else {
-                            isRunning[1] = true;
-                          }
-                        },
-                        icon: isRunning[1]
-                            ? Icon(
-                                Icons.pause_circle,
-                                size: 40,
-                                color: Colors.green,
-                              )
-                            : Icon(
-                                Icons.play_circle,
-                                size: 40,
-                                color: Colors.green,
-                              ),
-                      ),
-                      Text(
-                        "수학",
-                        style: TextStyle(fontSize: 25),
-                      ),
-                      Text(
-                        "${hourZero[1]}${hourList[1]} : ${minZero[1]}${minList[1]} : ${secZero[1]}${secList[1]}",
-                        style: TextStyle(fontSize: 25),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(
-                  height: 3,
-                  color: Colors.black,
                 ),
               ],
             ),
