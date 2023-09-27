@@ -1,0 +1,28 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int a = 10, b = 20;
+
+void add(int num1, int num2) {
+	int sum = num1 + num2;
+	cout << hex << setfill('0') << setw(8);
+	cout << "num1 at 0x" << &num1 << endl;
+	cout << "num2 at 0x" << &num2 << endl;
+	cout << "sum at 0x" << &sum << endl;
+}
+
+int main(void) {
+	string txt = "Hello ";
+	char* name = (char*) malloc(25);
+	cin >> name;
+	cout << txt << name << endl;
+	add(a,b);
+	cout << "a	at 0x" << &a << endl;
+	cout << "b	at 0x" << &b << endl;
+	cout << "txt	at 0x" << &txt << endl;
+	cout << "name 	at 0x" << ((void*) name) << endl;
+	free(name);
+	return 0;
+}
