@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+typedef struct
+{
+        int id;
+        char title[100];
+        char writer[100];
+}Book;
+
+int main(void){
+        Book book[3];
+        for (int i=0; i<3; i++){
+                printf("ID for new book: ");
+                scanf("%d",&book[i].id);
+                printf("Title: ");
+                scanf("%s",book[i].title);
+                printf("Writer: ");
+                scanf("%s",book[i].writer);
+        }
+
+        for (int i=0; i<3; i++) {
+                printf("Books[%d] ID: %d title: %s writer: %s\n", i, book[i].id, book[i].title, book[i].writer);
+        }
+  return 0;
+}
