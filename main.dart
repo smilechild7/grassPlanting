@@ -18,6 +18,7 @@ class _ClassAppState extends State<ClassApp> {
   var _totalTime = 0;
   var _isRunning = false;
   var _timer;
+  var _nowRunning;
   List<TimerItem> timerItems = [];
 
   @override
@@ -39,6 +40,15 @@ class _ClassAppState extends State<ClassApp> {
 
   void _startTimer(index) {
     setState(() {
+      if (_isRunning == true) {
+        timerItems[_nowRunning].isRunning = false;
+      }
+      _isRunning = true;
+      timerItems[index].isRunning = true;
+      _nowRunning = index;
+    });
+
+    setState(() {
       _isRunning = true;
       timerItems[index].isRunning = true;
     });
@@ -59,6 +69,15 @@ class _ClassAppState extends State<ClassApp> {
         element.time = 0;
         element.isRunning = false;
       });
+    });
+  }
+
+  void _resetEachTimer(index) {
+    setState(() {
+      _totalTime -= timerItems[index].time;
+      timerItems[index].time = 0;
+      timerItems[index].isRunning = false;
+      _isRunning = false;
     });
   }
 
@@ -133,24 +152,39 @@ class _ClassAppState extends State<ClassApp> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                IconButton(
-                                  padding: EdgeInsets.all(0),
-                                  onPressed: () {
-                                    timerItems[index].isRunning
-                                        ? _pauseTimer(index)
-                                        : _startTimer(index);
-                                  },
-                                  icon: timerItems[index].isRunning
-                                      ? Icon(
-                                          Icons.pause_circle,
-                                          size: 40,
-                                          color: Colors.green,
-                                        )
-                                      : Icon(
-                                          Icons.play_circle,
-                                          size: 40,
-                                          color: Colors.green,
-                                        ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      padding: EdgeInsets.all(0),
+                                      onPressed: () {
+                                        timerItems[index].isRunning
+                                            ? _pauseTimer(index)
+                                            : _startTimer(index);
+                                      },
+                                      icon: timerItems[index].isRunning
+                                          ? Icon(
+                                              Icons.pause_circle,
+                                              size: 40,
+                                              color: Colors.green,
+                                            )
+                                          : Icon(
+                                              Icons.play_circle,
+                                              size: 40,
+                                              color: Colors.green,
+                                            ),
+                                    ),
+                                    if (timerItems[index].time != 0)
+                                      IconButton(
+                                          padding: EdgeInsets.all(0),
+                                          onPressed: () {
+                                            _resetEachTimer(index);
+                                          },
+                                          icon: Icon(
+                                            Icons.stop_circle,
+                                            size: 40,
+                                            color: Colors.redAccent,
+                                          )),
+                                  ],
                                 ),
                                 Text(
                                   timerItems[index].name,
