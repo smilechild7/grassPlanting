@@ -1,0 +1,88 @@
+<자바스크립트 배우기 ~콜백함수>
+
+let a = 16; // let은 중복 선언이 안됨. 
+var b = "4"; // var는 중복 선언이 되어서 let 쓰는 것을 추천
+console.log(a*b); // 64 - 묵시적 형변환이라고 알아서 자바스크립트가 해주는 것
+console.log(a+b); // 164
+console.log(a+parseInt(b)); // 20 - 명시적 형변환  
+let c = "89";
+console.log(b+c) // 489 - + 는 연결형 연산자
+a +=10; // a는 26
+a++; // a는 27
+
+console.log(1=="1"); // true
+console.log(1==="1"); // false - 자료형까지 비교
+console.log(1!="1"); // false
+console.log(1!=="1"); // true - 안전한 것은 === 이므로 이것을 쓰도록 하자
+
+console.log(typeof a); // number - typeof : 타입을 반환
+console.log(typeof b); // string
+
+let d;
+d = d ?? 10; // ?? - null 변환 연산자. 값이 있다면 그 값을 쓰고 없으면 10을 대입해라
+console.log(d); // 10 - 내 컴퓨터에서는 안되는데 일단 알아둘 것
+
+// if문은 c랑 동일
+let e = 5;
+
+switch(e){       	// switch 문 안한지 좀 되었으니 복습!
+  case 1:
+    console.log(1);
+    break;		// break를 꼭 써야 여러번 수행할 것을 안함.
+  case 2:
+    console.log(2);
+    break;
+  case 3:
+    console.log(3);
+    break;
+  case 4:
+    console.log(4);
+    break;
+  case 5:
+    console.log(5);
+    break;
+  case 6:
+    console.log(6);
+    break;
+  case 7:
+    console.log(7);
+    break;
+  default:
+    console.log("8이상");
+    break;
+}
+
+function getArea(width, height){		//함수 선언  - function 사용
+	let area = width * height;
+	return area;
+}
+
+let area1 = getArea(100, 200);
+console.log(area1); // 20000
+
+---------------------------------------
+// 콜백 함수 : 함수를 파라미터로 전달
+function checkMood(mood, goodCallback, badCallback){
+  if (mood === "good"){
+    goodCallback();
+  } else {
+    badCallback();
+  }
+}
+
+function cry() {
+  console.log("ACTION::CRY");
+}
+function dance() {
+  console.log("ACTION::DANCE");
+}
+function sing() {
+  console.log("ACTION::SING");
+}
+checkMood("good", dance, cry); // ACTION::DANCE 
+
+
+
+
+
+
