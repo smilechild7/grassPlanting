@@ -79,7 +79,7 @@ function dance() {
 function sing() {
   console.log("ACTION::SING");
 }
-checkMood("good", dance, cry); // ACTION::DANCE 
+checkMood("good", dance, cry); // ACTION::DANCE - 함수 이름을 쓰면 됨
 
 
 
