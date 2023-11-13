@@ -59,6 +59,23 @@ function getArea(width, height){		//함수 선언  - function 사용
 
 let area1 = getArea(100, 200);
 console.log(area1); // 20000
+---------------------------------------
+
+let helloA = function () {
+	return "안녕하세요";
+}; // 함수 표현식 (우리가 기본적으로 아는 방식은 함수 선언식)
+
+// 화살표함수로 같은 표현을 할 수 있다
+// let helloA = () => {"안녕하세요"}; // 리턴값밖에 없으면 중괄호도 생략 가
+
+function helloB (){
+	return "안녕하세요"
+}; // 함수 선언식
+
+// 자바스크립트에서 함수 선언식은 프로그램이 실행되기 전 최상단으로 이동함.(호이스팅)
+// 함수 표현식은 호이스팅의 대상이 되지 않음.
+const helloText = hello();
+console.log(helloText); // 안녕하세요
 
 ---------------------------------------
 // 콜백 함수 : 함수를 파라미터로 전달
