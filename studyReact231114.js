@@ -47,7 +47,7 @@ const newArr = arr.map((elm) => { // map 배열 내장함수 : 새로운 배열�
 let number = 3;
 
 console.log(arr.includes(number)); // includes 내장함수 : 배열에 파라미터로 받은 값이 존재하는지 true / false 값을 리턴
-console.log(arr.indexOf(3)); // indexOf 내장함수 : 배열에 파라미터로 받은 값이 존재하면 인덱스를 리턴 없으면 -1
+console.log(arr.indexOf(3)); // indexOf 내장함수 : 배열에 파라미터로 받은 값이 존재하면 인덱스를 리턴, 없으면 -1
 
 const colorArr = [
   {num : 1, color : "red"},
@@ -56,7 +56,7 @@ const colorArr = [
   {num : 4, color : "green"},
   {num : 5, color : "blue"}
 ];
-console.log(colorArr.findIndex((elm) => elm.color === "green")); // findIndex는 배열을 순회하며 만족하는 가장 처음 인덱스를 반환환
+console.log(colorArr.findIndex((elm) => elm.color === "green")); // findIndex는 배열을 순회하며 만족하는 가장 처음 인덱스를 반환
 
 const element = colorArr.find((elm) => { // find 내장함수 : 조건에 맞는 요소를 가져온다.
   return elm.color === "blue";
@@ -70,15 +70,15 @@ console.log(colorArr.slice(0, 4)); // slice 내장함수 : 각각 begin, end 이
 const arr1 = [1,2,3,4];
 const arr2 = [4,5,6];
 
-console.log(arr1.concat(arr2)); // concat 내장함수 : 배열 뒤에 배열을 붙여서 출력
+console.log(arr1.concat(arr2)); // concat 내장함수 : 배열 뒤에 배열을 붙인다.
 
 let chars = ["나", "다", "가"];
-chars.sort(); // 원본 배열을 사전순으로 정렬, 기본적으로 문자로 생각하므로 숫자는 자동으로 안됨
+chars.sort(); // 원본 배열을 사전순으로 정렬, 기본적으로 문자를 기준으로 함. 숫자는 자동으로 안되기에 비교함수를 만들어야 함.
 
 let nums = [0,1,3,4,10,30,20]; 
 const compare = (a,b) => { // 따라서 비교함수를 만들어주어야 함. 
   if (a>b){return 1;} // 1이면 a를 뒤로 보내고 
-  else if (a<b){return -1;} // -1이면 a를 앞으로 보냄 => 오름차순
+  else if (a<b){return -1;} // -1이면 a를 앞으로 보냄 => 오름차순 (내림차순으로 하고 싶으면 return 값 -1과 1의 자리를 바꾸면 됨)
   else {return 0;}
 };
 nums.sort(compare); 
