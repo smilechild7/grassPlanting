@@ -107,7 +107,8 @@ console.log(allCookies); //["바나나쿠키", "딸기 쿠키", "초코쿠키", 
 
 
 function taskA() {
-  setTimeout(()=>{ // 내장 비동기 함수. 지정한 시간 뒤에 작업을 수
+  setTimeout(()=>{ // 내장 비동기 함수. 지정한 시간 뒤에 작업을 수행한다.
+  
     console.log("A TASK END")
   },2000)
   console.log("A 작업 끝");
