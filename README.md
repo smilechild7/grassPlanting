@@ -1,3 +1,3 @@
 # grassPlanting
-1 day 1 commit
-hello world!
+1 day 1 commit!
+
