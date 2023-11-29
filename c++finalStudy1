@@ -1,0 +1,40 @@
+#include <iostream>
+
+using namespace std;
+
+template <typename T>
+class MyPair
+{
+    T a, b;
+
+public:
+    MyPair(T first, T second)
+    {
+        a = first;
+        b = second;
+    }
+    T GetMax();
+};
+
+template <typename T>
+T MyPair<T>::GetMax()
+{
+    T retval;
+    retval = a > b ? a : b;
+    return retval;
+}
+
+int main()
+{
+    int a_i = 100, b_i = 75;
+    MyPair<int> myobject_i(a_i, b_i);
+    cout << "max(" << a_i << ","
+         << b_i << ")=" << myobject_i.GetMax()
+         << endl;
+    double a_d = 1.5, b_d = -3.5;
+    MyPair<double> myobject_d(a_d, b_d);
+    cout << "max(" << a_d << ","
+         << b_d << ")=" << myobject_d.GetMax()
+         << endl;
+    return 0;
+}
