@@ -63,6 +63,7 @@ int main(){
         }
 
         int s1,s2,s3;
+
         if(a!=0 && b!=0 && c!=0){
             cout << "#" << i+1 << " " << sum-maxSum << endl; 
         } else if(a==1||b==1||c==1){
@@ -87,16 +88,27 @@ int main(){
             }else if(c>1){
                 s3=2;
             }
-            int mMax = -100000;
+            int mMax1 = -1000000;
             for(int j=0; j<n; j++){
-                if(arr1[s1][j]>mMax){
-                    if(arr1[s2][j]==0){
-                        continue;
+                if(arr1[s1][j]>mMax1){
+                    if(arr1[s2][j]!=0){
+                        mMax1=arr1[s1][j];
                     }
-                    mMax=arr1[s1][j];
                 }
             }
-            cout << "#" << i+1 << " " << sum-maxSum-mMax << endl; 
+            int mMax2 = -1000000;
+            int m;
+            for(int j=0; j<n; j++){
+                if(arr1[s2][j]==0){
+                    m=arr1[s1][j];
+                }
+                if(arr1[s2][j]>mMax2&&arr1[s2][j]!=0){
+                    mMax2=arr1[s2][j];
+                }
+            }
+            int mMax22 = mMax2 + m;
+            int M = mMax1>mMax22? mMax1 : mMax22;
+            cout << "#" << i+1 << " " << sum-maxSum-M << endl; 
         } else if((a*b+b*c+c*a)!=0) {
             if (a==0){
                 s1=0;
@@ -111,7 +123,7 @@ int main(){
                 s2=0;
                 s3=1;
             }
-            int mMax=-100000;
+            int mMax=-1000000;
             for(int j=0; j<n; j++){
                 if(arr1[s1][j]>mMax){        
                     mMax=arr1[s1][j];
@@ -133,30 +145,29 @@ int main(){
                 s2=1;
             }
             int index1;
-            int mMax11=-100000;
+            int mMax11=-1000000;
             for(int j=0; j<n; j++){
                 if(arr1[s1][j]>mMax11){
                     mMax11=arr1[s1][j];
                     index1=j;
                 }
             }
-            int mMax12=-100000;
+            int mMax12=-1000000;
             for(int j=0; j<n; j++){
                 if(arr1[s2][j]>mMax12&&j!=index1){
                     mMax12=arr1[s2][j];
                 }
             }
             int mMax1 = mMax11+mMax12;
-
             int index2;
-            int mMax21=-100000;
+            int mMax21=-1000000;
             for(int j=0; j<n; j++){
                 if(arr1[s2][j]>mMax21){
                     mMax21=arr1[s2][j];
                     index2=j;
                 }
             }
-            int mMax22=-100000;
+            int mMax22=-1000000;
             for(int j=0; j<n; j++){
                 if(arr1[s1][j]>mMax22&&j!=index2){
                     mMax22=arr1[s1][j];
@@ -170,5 +181,5 @@ int main(){
             }
         }
     }
-    
+    return 0;
 }
