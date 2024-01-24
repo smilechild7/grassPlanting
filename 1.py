@@ -1,5 +1,3 @@
-
-
 from random import randint
 
 pc_choice = randint(1,10)
