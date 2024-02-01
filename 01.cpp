@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 int al[] = {0,0}, bl[] = {0,0};
 
 void getLocation(int n,int nl[]){
